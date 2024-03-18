@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Sentiment Analyzer</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-image: url('https://img.freepik.com/free-vector/abstract-watercolor-background_23-2149038179.jpg?size=626&ext=jpg'); /* Replace 'background-image.jpg' with the path to your downloaded image */
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.8); /* Adding opacity to the background color */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+}
+
+
+        h1 {
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #666;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            resize: none;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 18px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Review Sentiment Analyzer</h1>
+       
+        <h1>👍😀😡🤗👎</h1>
+        <form id="reviewForm">
+            <label for="review">Enter your review:</label>
+            <textarea id="review" name="review" rows="4" cols="50"></textarea>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById("reviewForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let formData = new FormData(this);
+            fetch("/predict", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("result").innerText = data.result;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
